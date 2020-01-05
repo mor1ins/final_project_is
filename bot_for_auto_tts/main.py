@@ -1,7 +1,15 @@
 import logging
+import os
+import subprocess
+import tempfile
+import time
 
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
-from config import TOKEN, REQUEST_KWARGS
+from config import TOKEN
+from gtts import gTTS
+from io import BytesIO
+from pydub import AudioSegment
+
 # Enable logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                     level=logging.INFO)
@@ -22,8 +30,20 @@ def help(update, context):
 
 
 def echo(update, context):
-    """Echo the user message."""
-    update.message.reply_text(update.message.text)
+    print(f'Received message "{update.message.text}" from {update.message.chat.id}')
+    received_time = int(time.time())
+    speech_file = f'audio/{update.message.chat.id}_{received_time}.mp3'
+    output_file = f'audio/{update.message.chat.id}_{received_time}.ogg'
+
+    mp3_fp = BytesIO()
+    tts = gTTS(update.message.text, lang='ru')
+    tts.save(speech_file)
+
+    FNULL = open(os.devnull, 'w')
+    subprocess.run(["ffmpeg", '-i', speech_file, '-acodec', 'libopus', output_file, '-y'], stdout=FNULL)
+
+    context.bot.send_voice(chat_id=update.message.chat.id, voice=open(output_file, 'rb'))
+    print(f'Sent message to {update.message.chat.id}')
 
 
 def error(update, context):
@@ -37,7 +57,7 @@ def main():
     # Make sure to set use_context=True to use the new context based callbacks
     # Post version 12 this will no longer be necessary
 
-    updater = Updater(TOKEN, request_kwargs=REQUEST_KWARGS, use_context=True)
+    updater = Updater(TOKEN, use_context=True)
 
     # Get the dispatcher to register handlers
     dp = updater.dispatcher
