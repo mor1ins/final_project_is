@@ -1,0 +1,25 @@
+<aiml version="1.0.1" encoding="UTF-8">
+<!-- basic_chat.aiml -->
+
+    <category>
+        <pattern>ПРИВЕТ</pattern>
+        <template>
+            Здорова, чувак!
+        </template>
+    </category>
+
+    <category>
+        <pattern>ТЫ КТО</pattern>
+        <template>
+            Я бот, салага!
+        </template>
+    </category>
+
+    <category>
+        <pattern>*</pattern>
+        <template>
+            А теперь по-руски скажи, я тебя не понял.
+        </template>
+    </category>
+
+</aiml>

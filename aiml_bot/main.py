@@ -1,5 +1,6 @@
 import logging
 import time
+import aiml
 
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 
@@ -11,6 +12,10 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
                     level=logging.INFO)
 
 logger = logging.getLogger(__name__)
+
+aiml_kernel = aiml.Kernel()
+aiml_kernel.learn("std-startup.xml")
+aiml_kernel.respond("load aiml b")
 
 
 def say(text, chat_id, context):
@@ -33,7 +38,7 @@ def help(update, context):
 
 def echo(update, context):
     print(f'Received message "{update.message.text}" from {update.message.chat.id}')
-    say(update.message.text, update.message.chat.id, context)
+    say(aiml_kernel.respond(update.message.text), update.message.chat.id, context)
     print(f'Sent message to {update.message.chat.id}')
 
 
