@@ -13,6 +13,12 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 logger = logging.getLogger(__name__)
 
 
+def say(text, chat_id, context):
+    output_file = f'audio/{chat_id}_{int(time.time())}'
+    tts.text_to_voice(text, 'ru', output_file)
+    context.bot.send_voice(chat_id=chat_id, voice=open(f'{output_file}.ogg', 'rb'))
+
+
 # Define a few command handlers. These usually take the two arguments update and
 # context. Error handlers also receive the raised TelegramError object in error.
 def start(update, context):
@@ -26,16 +32,9 @@ def help(update, context):
 
 
 def echo(update, context):
-    text = update.message.text
-    chat_id = update.message.chat.id
-
-    print(f'Received message "{text}" from {chat_id}')
-
-    output_file = f'audio/{chat_id}_{int(time.time())}'
-    tts.text_to_voice(text, 'ru', output_file)
-
-    context.bot.send_voice(chat_id=chat_id, voice=open(f'{output_file}.ogg', 'rb'))
-    print(f'Sent message to {chat_id}')
+    print(f'Received message "{update.message.text}" from {update.message.chat.id}')
+    say(update.message.text, update.message.chat.id, context)
+    print(f'Sent message to {update.message.chat.id}')
 
 
 def error(update, context):
