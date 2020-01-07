@@ -47,6 +47,7 @@
                 <li>Привет</li>
                 <li>Доброго времени суток, я <get name="bot_name"/>!</li>
             </random>
+
         </template>
     </category>
 
@@ -183,7 +184,7 @@
 
     <category>
         <pattern>МЕСЯЦ</pattern>
-        <template>Как можно было пропустить приход <date locale="ru_RU" format="%B"/>?</template>
+        <template>Как можно было пропустить приход <date locale="ru_RU" format="%B"/>? ***<date locale="ru_RU" format="%B"/>***</template>
     </category>
 
     <category>
@@ -198,7 +199,7 @@
 
     <category>
         <pattern>ГОД</pattern>
-        <template>На дворе <date locale="ru_RU" format="%Y"/> год!</template>
+        <template>На дворе <date locale="ru_RU" format="%Y"/> год! ***Год***</template>
     </category>
 
     <category>
@@ -214,18 +215,18 @@
     <category>
         <pattern>ВРЕМЯ ГОДА</pattern>
         <template> Время года <think><set name="month"><date format="%B"/></set></think>
-            <condition name = "month" value = "декабря">Зима</condition>
-            <condition name = "month" value = "января">Зима</condition>
-            <condition name = "month" value = "февраля">Зима</condition>
-            <condition name = "month" value = "марта">Весна</condition>
-            <condition name = "month" value = "апреля">Весна</condition>
-            <condition name = "month" value = "мая">Весна</condition>
-            <condition name = "month" value = "июня">Лето</condition>
-            <condition name = "month" value = "июля">Лето</condition>
-            <condition name = "month" value = "августа">Лето</condition>
-            <condition name = "month" value = "сентября">Осень</condition>
-            <condition name = "month" value = "октября">Осень</condition>
-            <condition name = "month" value = "ноября">Осень</condition>
+            <condition name = "month" value = "декабря">Зима ***Зима***</condition>
+            <condition name = "month" value = "января">Зима ***Зима***</condition>
+            <condition name = "month" value = "февраля">Зима ***Зима***</condition>
+            <condition name = "month" value = "марта">Весна ***Весна***</condition>
+            <condition name = "month" value = "апреля">Весна ***Весна***</condition>
+            <condition name = "month" value = "мая">Весна ***Весна***</condition>
+            <condition name = "month" value = "июня">Лето ***Лето***</condition>
+            <condition name = "month" value = "июля">Лето ***Лето***</condition>
+            <condition name = "month" value = "августа">Лето ***Лето***</condition>
+            <condition name = "month" value = "сентября">Осень ***Осень***</condition>
+            <condition name = "month" value = "октября">Осень ***Осень***</condition>
+            <condition name = "month" value = "ноября">Осень ***Осень***</condition>
         </template>
     </category>
 
@@ -258,11 +259,11 @@
             <condition name = "random_date" value="не задано"><think><srai>НАЗОВИ СЛУЧАЙНУЮ ДАТУ</srai></think>
                 Ты не уточнил, поэтому расскажу про <get name="random_date"/> года.</condition>
             В этот день
-            <condition name = "random_date" value = "12 апреля 1961">Гагарин полетел в космос</condition>
-            <condition name = "random_date" value = "29 октября 1969">родился интернет</condition>
-            <condition name = "random_date" value = "28 июля 1914">началась первая мировая война</condition>
-            <condition name = "random_date" value = "20 апреля 1889">родился Гитлер</condition>
-            <condition name = "random_date" value = "10 декабря 1815">родилась Ада Лавлейс</condition>
+            <condition name = "random_date" value = "12 апреля 1961">Гагарин полетел в космос ***гагарин***</condition>
+            <condition name = "random_date" value = "29 октября 1969">родился интернет ***arpanet***</condition>
+            <condition name = "random_date" value = "28 июля 1914">началась первая мировая война ***взгляд на две тысячи ярдов***</condition>
+            <condition name = "random_date" value = "20 апреля 1889">родился Гитлер ***гитлер***</condition>
+            <condition name = "random_date" value = "10 декабря 1815">родилась Ада Лавлейс ***Ада Лавлейс***</condition>
             .
         </template>
     </category>
