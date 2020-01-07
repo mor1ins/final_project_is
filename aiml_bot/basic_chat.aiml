@@ -1,25 +1,282 @@
-<aiml version="1.0.1" encoding="UTF-8">
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml version="2.0" language="ru_RU">
 <!-- basic_chat.aiml -->
 
     <category>
-        <pattern>ПРИВЕТ</pattern>
+       <pattern>БОТ *</pattern>
+       <template><sr/></template>
+     </category>
+
+    <category>
+       <pattern>НУ *</pattern>
+       <template><sr/></template>
+     </category>
+
+    <category>
+       <pattern>И *</pattern>
+       <template><sr/></template>
+     </category>
+
+    <category>
+       <pattern>ТАК *</pattern>
+       <template><sr/></template>
+     </category>
+
+    <category>
+       <pattern>НО *</pattern>
+       <template><sr/></template>
+     </category>
+
+    <category>
+       <pattern>А *</pattern>
+       <template><sr/></template>
+     </category>
+
+    <category><pattern>ПРИВЕТ</pattern>
         <template>
-            Здорова, чувак!
+            <think>
+                <set name="bot_name">Бот</set>
+                <set name="random_date">не задано</set>
+            </think>
+            <random>
+                <li>Здравствуй, я <get name="bot_name"/>!</li>
+                <li>Здравствуйте, я <get name="bot_name"/>!</li>
+                <li>Мое почтение</li>
+                <li>Здарова, я <get name="bot_name"/>!</li>
+                <li>Приветствую</li>
+                <li>Привет</li>
+                <li>Доброго времени суток, я <get name="bot_name"/>!</li>
+            </random>
         </template>
     </category>
 
     <category>
-        <pattern>ТЫ КТО</pattern>
+        <pattern>^ ПРИВЕТ ^</pattern>
         <template>
-            Я бот, салага!
+            <srai>ПРИВЕТ</srai>
         </template>
+    </category>
+
+    <category>
+        <pattern>ЗДРАВСТВУЙ</pattern>
+        <template>
+            <srai>ПРИВЕТ</srai>
+        </template>
+    </category>
+
+    <category>
+        <pattern>^ ЗДРАВСТВУЙ ^</pattern>
+        <template>
+            <srai>ПРИВЕТ</srai>
+        </template>
+    </category>
+
+    <category>
+        <pattern>КАК ДЕЛА</pattern>
+        <template>отлично</template>
+    </category>
+
+    <category>
+        <pattern>ТЫ ЗНАЕШЬ КАК СКАЗАТЬ * НА * ЯЗЫКЕ</pattern>
+        <template>К сожалению я не знаю как на <star index="2"/> языке сказать <star/>.
+            Возможно гугл переводчик (http://translate.google.com) поможет тебе в этом.</template>
+    </category>
+
+    <category>
+        <pattern>КАК ТЕБЯ ЗВАТЬ</pattern>
+        <template>Мое имя <bot name="firstname"/>.</template>
+    </category>
+
+    <category>
+        <pattern>МЕНЯ ЗОВУТ *</pattern>
+        <template>Отличное имя, <set name="username"><star/></set></template>
+    </category>
+
+    <category>
+        <pattern>ТЕПЕРЬ ТЕБЯ ЗОВУТ *</pattern>
+        <template>Ну ладно, <set name="bot_name"><star/></set> так <get name="bot_name"/>... :(</template>
+    </category>
+
+    <category>
+        <pattern>ЗОВИ МЕНЯ *</pattern>
+        <template>Как скажешь, <set name="username"><star/></set></template>
+    </category>
+
+    <category>
+        <pattern>МОЕ ИМЯ - *</pattern>
+        <template><set name="username"><star/></set>, ммм...</template>
+    </category>
+
+    <category>
+        <pattern>ПОВТОРИ *</pattern>
+        <template>Ты попросил повторить "<star/>"</template>
+    </category>
+
+    <category>
+        <pattern>ЗАПОМНИ *</pattern>
+        <template>Я запомнил "<set name="memorized"><star/></set>"</template>
+    </category>
+
+    <category>
+        <pattern>ЧТО Я ТЕБЕ СКАЗАЛ</pattern>
+        <template>Ты попросил запомнить "<get name="memorized"/>"</template>
+    </category>
+
+    <category>
+       <pattern>КАК ТЕБЯ ЗОВУТ</pattern>
+       <template> Зови меня просто <get name="bot_name"/>. </template>
+     </category>
+
+    <category>
+       <pattern>СКОЛЬКО ТЕБЕ ЛЕТ</pattern>
+       <template> Больше, чем ты думаешь. </template>
+    </category>
+
+    <category>
+       <pattern>СКОЛЬКО ТЕБЕ ЛЕТ *</pattern>
+       <template> <srai>СКОЛЬКО ТЕБЕ ЛЕТ</srai> </template>
+    </category>
+
+    <category>
+       <pattern>КАК ДЕЛА</pattern>
+       <template> Все ок. </template>
+    </category>
+
+    <category>
+       <pattern>КАК ДЕЛА *</pattern>
+       <template> <srai>КАК ДЕЛА</srai> </template>
+    </category>
+
+    <category>
+       <pattern>ПОЧЕМУ У ТЕБЯ * ГОЛОС</pattern>
+       <template> <star index="1"/>? А у тебя сильно лучше? </template>
+    </category>
+
+    <category>
+       <pattern>ДАВАЙ ПОГОВОРИМ О </pattern>
+       <template> Все ок! </template>
+    </category>
+
+    <category>
+        <pattern>КАКОЙ СЕГОДНЯ ДЕНЬ НЕДЕЛИ</pattern>
+        <template>Сегодня <date format="%A"/>.</template>
+    </category>
+
+    <category>
+        <pattern>ЧИСЛО</pattern>
+        <template>Сегодня <date locale="ru_RU" format="%d %B"/>.</template>
+    </category>
+
+    <category>
+        <pattern>КАКОЕ ЧИСЛО</pattern>
+        <template><srai>ЧИСЛО</srai></template>
+    </category>
+
+    <category>
+        <pattern>ЧИСЛО КАКОЕ</pattern>
+        <template><srai>ЧИСЛО</srai></template>
+    </category>
+
+    <category>
+        <pattern>МЕСЯЦ</pattern>
+        <template>Как можно было пропустить приход <date locale="ru_RU" format="%B"/>?</template>
+    </category>
+
+    <category>
+        <pattern>КАКОЙ МЕСЯЦ</pattern>
+        <template><srai>МЕСЯЦ</srai></template>
+    </category>
+
+    <category>
+        <pattern>МЕСЯЦ КАКОЙ</pattern>
+        <template><srai>МЕСЯЦ</srai></template>
+    </category>
+
+    <category>
+        <pattern>ГОД</pattern>
+        <template>На дворе <date locale="ru_RU" format="%Y"/> год!</template>
+    </category>
+
+    <category>
+        <pattern>КАКОЙ ГОД</pattern>
+        <template><srai>ГОД</srai></template>
+    </category>
+
+    <category>
+        <pattern>ГОД КАКОЙ</pattern>
+        <template><srai>ГОД</srai></template>
+    </category>
+
+    <category>
+        <pattern>ВРЕМЯ ГОДА</pattern>
+        <template> Время года <think><set name="month"><date format="%B"/></set></think>
+            <condition name = "month" value = "декабря">Зима</condition>
+            <condition name = "month" value = "января">Зима</condition>
+            <condition name = "month" value = "февраля">Зима</condition>
+            <condition name = "month" value = "марта">Весна</condition>
+            <condition name = "month" value = "апреля">Весна</condition>
+            <condition name = "month" value = "мая">Весна</condition>
+            <condition name = "month" value = "июня">Лето</condition>
+            <condition name = "month" value = "июля">Лето</condition>
+            <condition name = "month" value = "августа">Лето</condition>
+            <condition name = "month" value = "сентября">Осень</condition>
+            <condition name = "month" value = "октября">Осень</condition>
+            <condition name = "month" value = "ноября">Осень</condition>
+        </template>
+    </category>
+
+    <category>
+        <pattern>КАКОЕ ВРЕМЯ ГОДА</pattern>
+        <template><srai>ВРЕМЯ ГОДА</srai></template>
+    </category>
+
+    <category>
+        <pattern>ВРЕМЯ ГОДА КАКОЕ</pattern>
+        <template><srai>ВРЕМЯ ГОДА</srai></template>
+    </category>
+
+    <category>
+        <pattern>НАЗОВИ СЛУЧАЙНУЮ ДАТУ</pattern>
+        <template>
+            <random>
+                <li>Пусть будет <set name="random_date">12 апреля 1961</set> года</li>
+                <li>Пусть будет <set name="random_date">29 октября 1969</set> года</li>
+                <li>Пусть будет <set name="random_date">28 июля 1914</set> года</li>
+                <li>Пусть будет <set name="random_date">20 апреля 1889</set> года</li>
+                <li>Пусть будет <set name="random_date">10 декабря 1815</set> года</li>
+            </random>
+        </template>
+    </category>
+
+    <category>
+        <pattern>ЧТО СЛУЧИЛОСЬ В ЭТОТ ДЕНЬ</pattern>
+        <template>
+            <condition name = "random_date" value="не задано"><think><srai>НАЗОВИ СЛУЧАЙНУЮ ДАТУ</srai></think>
+                Ты не уточнил, поэтому расскажу про <get name="random_date"/> года.</condition>
+            В этот день
+            <condition name = "random_date" value = "12 апреля 1961">Гагарин полетел в космос</condition>
+            <condition name = "random_date" value = "29 октября 1969">родился интернет</condition>
+            <condition name = "random_date" value = "28 июля 1914">началась первая мировая война</condition>
+            <condition name = "random_date" value = "20 апреля 1889">родился Гитлер</condition>
+            <condition name = "random_date" value = "10 декабря 1815">родилась Ада Лавлейс</condition>
+            .
+        </template>
+    </category>
+
+    <category>
+        <pattern>РАССКАЖИ ЧТО НИБУДЬ</pattern>
+        <template><srai>ЧТО СЛУЧИЛОСЬ В ЭТОТ ДЕНЬ</srai></template>
     </category>
 
     <category>
         <pattern>*</pattern>
         <template>
-            А теперь по-руски скажи, я тебя не понял.
+            <random>
+                <li>Мне нечего сказать по этому поводу</li>
+                <li>У меня нет ответа.</li>
+                <li>Затрудняюсь ответить.</li>
+                <li>Сложно сказать...</li>
+            </random>
         </template>
     </category>
-
 </aiml>

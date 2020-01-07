@@ -38,7 +38,9 @@ def help(update, context):
 
 def echo(update, context):
     print(f'Received message "{update.message.text}" from {update.message.chat.id}')
-    say(aiml_kernel.respond(update.message.text), update.message.chat.id, context)
+    response = aiml_kernel.respond(update.message.text)
+    update.message.reply_text(response)
+    say(response, update.message.chat.id, context)
     print(f'Sent message to {update.message.chat.id}')
 
 

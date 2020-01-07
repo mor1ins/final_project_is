@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9efb389d-705d-4345-adc9-92b8f736d166" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../aiml_bot/basic_chat.aiml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../aiml_bot/std-startup.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../aiml_bot/basic_chat.aiml" beforeDir="false" afterPath="$PROJECT_DIR$/../aiml_bot/basic_chat.aiml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../aiml_bot/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/../aiml_bot/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
@@ -86,7 +85,7 @@
       <option name="presentableId" value="Default" />
       <updated>1578247639843</updated>
       <workItem from="1578247644837" duration="7529000" />
-      <workItem from="1578323708088" duration="1445000" />
+      <workItem from="1578323708088" duration="2173000" />
     </task>
     <servers />
   </component>
