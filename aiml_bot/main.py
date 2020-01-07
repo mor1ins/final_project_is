@@ -1,11 +1,17 @@
 import logging
+import os
+import random
+import re
+import shutil
+import subprocess
 import time
-import aiml
 
+import aiml
+from google_images_download import google_images_download
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 
-from config import TOKEN
 import tts_tools as tts
+from config import TOKEN
 
 # Enable logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -21,13 +27,12 @@ aiml_kernel.respond("load aiml b")
 def say(text, chat_id, context):
     output_file = f'audio/{chat_id}_{int(time.time())}'
     tts.text_to_voice(text, 'ru', output_file)
-    context.bot.send_voice(chat_id=chat_id, voice=open(f'{output_file}.ogg', 'rb'))
+    voice = f'{output_file}.ogg'
+    context.bot.send_voice(chat_id=chat_id, voice=open(voice, 'rb'))
+    os.remove(voice)
 
 
-# Define a few command handlers. These usually take the two arguments update and
-# context. Error handlers also receive the raised TelegramError object in error.
 def start(update, context):
-    """Send a message when the command /start is issued."""
     update.message.reply_text('Hi!')
 
 
@@ -39,9 +44,22 @@ def help(update, context):
 def echo(update, context):
     print(f'Received message "{update.message.text}" from {update.message.chat.id}')
     response = aiml_kernel.respond(update.message.text)
+    command_pattern = r"\*\*\*\w+\s*\w*\*\*\*"
+    search = re.search(command_pattern, response)
+    if search is not None:
+        response = re.sub(command_pattern, '', response)
+        keywords = search.group()[3:-3]
+        subprocess.run(["googleimagesdownload", "--keywords", keywords, "--limit",  "10", "-o", "image/"])
+
     update.message.reply_text(response)
     say(response, update.message.chat.id, context)
-    print(f'Sent message to {update.message.chat.id}')
+    print(f'Sent message "{response}" to {update.message.chat.id}')
+    image_path = 'image/'
+    for directory in os.listdir(image_path):
+        dir_path = os.path.join(image_path, directory)
+        photos = [os.path.join(dir_path, photo) for photo in os.listdir(dir_path)]
+        context.bot.send_photo(chat_id=update.message.chat.id, photo=open(random.choice(photos), 'rb'))
+        shutil.rmtree(dir_path)
 
 
 def error(update, context):

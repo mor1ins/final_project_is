@@ -153,8 +153,12 @@
     </category>
 
     <category>
-       <pattern>ДАВАЙ ПОГОВОРИМ О </pattern>
-       <template> Все ок! </template>
+       <pattern>ПОКАЖИ МНЕ *</pattern>
+        <template> Смотри! Это <star/>! ***<star/>*** </template>
+    </category>
+    <category>
+       <pattern>ПОКАЖИ *</pattern>
+        <template> <srai>ПОКАЖИ МНЕ <star/></srai> </template>
     </category>
 
     <category>
