@@ -22,6 +22,15 @@ class Fact(Item):
         super().__init__(fact_id)
         self._text = text
 
+    def text(self):
+        return self._text
+
+    def __eq__(self, other):
+        return self.to_str() == other
+
+    def __hash__(self):
+        return hash(self.to_str())
+
     def __str__(self):
         return self.to_str()
 
@@ -38,7 +47,8 @@ class Fact(Item):
 
 
 class Rule(Item):
-    pattern = re.compile(r"r(\d+)\s*:\s*((f\d+)[\s,]\s*(f\d+)*)\s*->\s*(f\d+),\s*(\d+\.\d+)\n")
+    # pattern = re.compile(r"r(\d+)\s*:\s*((f\d+)[\s,]\s*(f\d+)*)\s*->\s*(f\d+),\s*(\d+\.\d+)\n")
+    pattern = re.compile(r"r(\d+)\s*:\s*((f\d+)(\s|,\s*f\d+)*)\s*->\s*(f\d+)(,\s*(\d\.\d+))?\n")
 
     def __init__(self, rule_id: int, left: list, right: str, weight: float):
         super().__init__(rule_id)
@@ -46,12 +56,27 @@ class Rule(Item):
         self._right = right
         self._weight = weight
 
+    def left(self):
+        return self._left
+
+    def right(self):
+        return self._right
+
+    def weight(self):
+        return self._weight
+
+    def __eq__(self, other):
+        return self.to_str() == other
+
+    def __hash__(self):
+        return hash(self.to_str())
+
     @staticmethod
     def from_text(text):
         groups = Rule.pattern.match(text).groups()
         premise = re.split(r"[\s,]\s*", groups[1])[:-1]
-        conclusion = groups[-2]
-        weight = float(groups[-1])
+        conclusion = groups[-3]
+        weight = 1.0 if groups[-1] is None else float(groups[-1])
         return Rule(int(groups[0]), premise, conclusion, weight)
 
     def replace_with_facts(self, facts: list):
