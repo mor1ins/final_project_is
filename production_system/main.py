@@ -1,7 +1,10 @@
+import operator
 import re
+import string
 
 from Parser import Parser, Fact, Rule
 import pprint
+from DempsterShafer import calc_dempster_shefer
 
 
 class ProductionMachine:
@@ -64,10 +67,17 @@ class ProductionMachine:
         return self._result
 
 
+def get_observation(count, index, value):
+    letters = string.ascii_letters[:count]
+    elements = list(map(lambda l: f'\'{l[0]}\': {value if l[1] == index else 0.0}', zip(letters, range(len(letters)))))
+    elements.append(f'\'{letters}\': {1 - value}')
+    return "{ %s }" % ', '.join(elements)
+
+
 if __name__ == '__main__':
     machine = ProductionMachine('facts_and_rules', Parser())
     # truth = input('Какие факты истины?\r\n')
-    truth = '6, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19'
+    truth = '1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 20, 21, 23, 24, 25, 26, 31'
     true_facts = list(map(int, re.split(r",\s*", truth)))
     machine.set_base(true_facts)
     print('База:')
@@ -79,7 +89,18 @@ if __name__ == '__main__':
     print('Больше нет правил, которые возможно применить.')
     print()
 
-    # print('Установленные факты:')
-    # pprint.pprint(facts - machine.base())
+    results = machine.result()
+    facts2 = list(set([result[0] for result in results]))
 
-    pprint.pprint(machine.result())
+    observations = []
+    for result in results:
+        observations.append(get_observation(len(facts2), facts2.index(result[0]), result[1]))
+    plses = calc_dempster_shefer(observations)
+    for key in plses.keys():
+        if len(key) > 1:
+            del plses[key]
+            break
+
+    maximum = max(plses.items(), key=operator.itemgetter(1))
+    maximum = (facts2[string.ascii_lowercase.index(maximum[0])].text(), maximum[1])
+    print(maximum)
