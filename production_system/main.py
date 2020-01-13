@@ -64,7 +64,19 @@ class ProductionMachine:
                 return self.facts()
 
     def result(self):
-        return self._result
+        _facts2 = list(set([result[0] for result in self._result]))
+
+        _observations = []
+        for result in self._result:
+            _observations.append(get_observation(len(_facts2), _facts2.index(result[0]), result[1]))
+        _plses = calc_dempster_shefer(_observations)
+        for key in _plses.keys():
+            if len(key) > 1:
+                del _plses[key]
+                break
+
+        maximum = max(_plses.items(), key=operator.itemgetter(1))
+        return _facts2[string.ascii_lowercase.index(maximum[0])].text(), maximum[1]
 
 
 def get_observation(count, index, value):
@@ -89,18 +101,4 @@ if __name__ == '__main__':
     print('Больше нет правил, которые возможно применить.')
     print()
 
-    results = machine.result()
-    facts2 = list(set([result[0] for result in results]))
-
-    observations = []
-    for result in results:
-        observations.append(get_observation(len(facts2), facts2.index(result[0]), result[1]))
-    plses = calc_dempster_shefer(observations)
-    for key in plses.keys():
-        if len(key) > 1:
-            del plses[key]
-            break
-
-    maximum = max(plses.items(), key=operator.itemgetter(1))
-    maximum = (facts2[string.ascii_lowercase.index(maximum[0])].text(), maximum[1])
-    print(maximum)
+    print(machine.result())
